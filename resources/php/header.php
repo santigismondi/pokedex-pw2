@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <div class="d-flex align-items-center">
             <a href="../../index.php" class="d-flex align-items-center text-dark text-decoration-none">
-                <img src="../imagenes/logo.png" alt="Logo" width="40" height="40" class="me-2 border border-dark p-1">
+                <img src="resources/imagenes/logo.png" alt="Logo" width="40" height="40" class="me-2 border border-dark p-1">
                 <span class="fs-3 fw-bold font-monospace">Pokedex</span>
             </a>
         </div>
