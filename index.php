@@ -10,15 +10,15 @@
     $busqueda = isset($_GET['busqueda']) ? mysqli_real_escape_string($conexion, $_GET['busqueda']) : '';
 
     // Armamos la consulta SQL base
-    $sql = "SELECT id, numero, imagen, nombre, tipo FROM pokemon";
+    $sql = "SELECT id, numero_identificador, imagen_ruta, nombre, tipo FROM pokemons";
 
     // Si el usuario buscó algo, filtramos los resultados
     if ($busqueda != '') {
-        $sql .= " WHERE nombre LIKE '%$busqueda%' OR tipo LIKE '%$busqueda%' OR numero = '$busqueda'";
+        $sql .= " WHERE nombre LIKE '%$busqueda%' OR tipo LIKE '%$busqueda%' OR numero_identificador = '$busqueda'";
     }
 
     // Ordenamos siempre por el número del pokédex
-    $sql .= " ORDER BY numero ASC";
+    $sql .= " ORDER BY numero_identificador ASC";
 
     // Ejecutamos la consulta
     $resultado = mysqli_query($conexion, $sql);
@@ -58,12 +58,12 @@
                     echo "<tr>";
 
                     // Mostramos la imagen del pokemon (la base de datos debe guardar la ruta, ej: 'img/charmander.png')
-                    echo "<td><img src='" . htmlspecialchars($fila['imagen']) . "' alt='" . htmlspecialchars($fila['nombre']) . "' width='50'></td>";
+                    echo "<td><img src='" . htmlspecialchars($fila['imagen_ruta']) . "' alt='" . htmlspecialchars($fila['numero_identificador']) . "' width='50'></td>";
 
                     // Mostramos la imagen del tipo (asumiendo que en la BD guardas 'fuego', 'agua', etc.)
                     echo "<td><img src='img/tipo_" . htmlspecialchars($fila['tipo']) . ".png' alt='" . htmlspecialchars($fila['tipo']) . "' width='30'></td>";
 
-                    echo "<td>" . htmlspecialchars($fila['numero']) . "</td>";
+                    echo "<td>" . htmlspecialchars($fila['numero_identificador']) . "</td>";
 
                     // Enlace al detalle del pokemon pasando el ID autoincremental
                     echo "<td><a href='detalle.php?id=" . htmlspecialchars($fila['id']) . "'>" . htmlspecialchars($fila['nombre']) . "</a></td>";
