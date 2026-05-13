@@ -8,5 +8,8 @@
 
     if (!$conexion) {
         die ("Error de conexion: " . mysqli_connect_error());
+    }else{
+        echo ("EXITO! conexion conectada");
     }
+
 ?>
