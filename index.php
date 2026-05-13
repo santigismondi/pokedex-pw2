@@ -10,10 +10,6 @@
     // Armamos la consulta SQL base
     $sql = "SELECT id, numero_identificador, imagen_ruta, nombre, tipo FROM pokemons";
 
-    // Si el usuario buscó algo, filtramos los resultados
-
-    $sql = "SELECT id, numero, imagen, nombre, tipo FROM pokemon";
-
     if ($busqueda != '') {
         $sql .= " WHERE nombre LIKE '%$busqueda%' OR tipo LIKE '%$busqueda%' OR numero_identificador = '$busqueda'";
     }
@@ -22,11 +18,8 @@
     // Ordenamos siempre por el número del pokédex
     $sql .= " ORDER BY numero_identificador ASC";
 
-    $sql .= " ORDER BY numero ASC";
-
-
     $resultado = mysqli_query($conexion, $sql);
-    echo "QUERY: " . $resultado; // Debug: muestra la consulta SQL generada
+
 ?>
 
 <section class="row mb-4">
