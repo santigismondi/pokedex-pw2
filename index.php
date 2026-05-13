@@ -4,24 +4,15 @@
     require __DIR__ . '/resources/php/header.php';
     require __DIR__ . '/resources/database/dbConection.php';
 
-    // 2. Lógica de búsqueda
-    // Capturamos lo que el usuario ingresa en el buscador.
-    // Usamos mysqli_real_escape_string por seguridad, para evitar inyecciones SQL.
     $busqueda = isset($_GET['busqueda']) ? mysqli_real_escape_string($conexion, $_GET['busqueda']) : '';
-
-    // Armamos la consulta SQL base
     $sql = "SELECT id, numero, imagen, nombre, tipo FROM pokemon";
-
-    // Si el usuario buscó algo, filtramos los resultados
     if ($busqueda != '') {
         $sql .= " WHERE nombre LIKE '%$busqueda%' OR tipo LIKE '%$busqueda%' OR numero = '$busqueda'";
     }
-
-    // Ordenamos siempre por el número del pokédex
     $sql .= " ORDER BY numero ASC";
 
-    // Ejecutamos la consulta
     $resultado = mysqli_query($conexion, $sql);
+    echo "QUERY: " . $resultado; // Debug: muestra la consulta SQL generada
 ?>
 
 <section class="row mb-4">
