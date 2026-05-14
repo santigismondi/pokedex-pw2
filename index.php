@@ -60,7 +60,11 @@ $busqueda = isset($_GET['busqueda']) ? mysqli_real_escape_string($conexion, $_GE
                     echo "<td><img src='" . htmlspecialchars($fila['imagen_ruta']) . "' alt='" . htmlspecialchars($fila['numero_identificador']) . "' width='50'></td>";
 
                     // Mostramos la imagen del tipo (asumiendo que en la BD guardas 'fuego', 'agua', etc.)
-                    echo "<td><img src='img/tipo_" . htmlspecialchars($fila['tipo']) . ".png' alt='" . htmlspecialchars($fila['tipo']) . "' width='30'></td>";
+                    $tipoArchivo = strtolower($fila['tipo']);
+                    $tipoArchivo = str_replace('é', 'e', $tipoArchivo);
+                    $tipoArchivo = str_replace('í', 'i', $tipoArchivo);
+
+                    echo "<td><img src='resources/imagenes/tipos/" . $tipoArchivo . ".webp' alt='" . htmlspecialchars($fila['tipo']) . "' width='50'></td>";
 
                     echo "<td>" . htmlspecialchars($fila['numero_identificador']) . "</td>";
 
