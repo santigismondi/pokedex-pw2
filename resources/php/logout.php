@@ -6,5 +6,5 @@ $_SESSION = [];
 
 session_destroy();
 
-header("Location: /pokedex/index.php");
+header("Location: ../../index.php");
 exit();
