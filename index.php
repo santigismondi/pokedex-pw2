@@ -69,7 +69,7 @@ $busqueda = isset($_GET['busqueda']) ? mysqli_real_escape_string($conexion, $_GE
                     echo "<td>" . htmlspecialchars($fila['numero_identificador']) . "</td>";
 
                     // Enlace al detalle del pokemon pasando el ID autoincremental
-                    echo "<td><a href='detalle.php?id=" . htmlspecialchars($fila['id']) . "'>" . htmlspecialchars($fila['nombre']) . "</a></td>";
+                    echo "<td><a href='visualizacionPokemon.php?id=" . htmlspecialchars($fila['id']) . "'>" . htmlspecialchars($fila['nombre']) . "</a></td>";
 
                     // Si es administrador, mostramos los botones de acción
                     if (isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] === 'Administrador') {
