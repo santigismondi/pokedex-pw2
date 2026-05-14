@@ -1,8 +1,27 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+session_start();
+$error = "";
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+    $conexion = new mysqli("localhost", "root", "", "pokedex");
+    $resultado = $conexion->query("SELECT * FROM usuarios WHERE username='$username'");
+    $usuario = $resultado->fetch_assoc();
+
+
+    if(!$usuario){
+        $error = "El usuario no existe";
+    }elseif ($usuario && password_verify($password, $usuario['password'])) {
+        $_SESSION['usuario'] = $usuario;
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    } else {
+        $error = "La contraseña es incorrecta";
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,20 +42,62 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
 
         <div>
-            <?php
-            // Verificamos si existe una variable de sesión que confirme el login del admin
-            if (isset($_SESSION['logueado']) && $_SESSION['logueado'] === true):
-                ?>
-                <div class="d-flex align-items-center">
-                    <span class="me-3 fw-bold">Usuario ADMIN</span> <a href="logout.php" class="btn btn-outline-danger btn-sm">Salir</a>
-                </div>
-            <?php else: ?>
-                <form action="procesar_login.php" method="POST" class="d-flex">
-                    <input type="text" name="usuario" class="form-control form-control-sm me-2" placeholder="Usuario" required> <input type="password" name="password" class="form-control form-control-sm me-2" placeholder="Password" required> <button type="submit" class="btn btn-primary btn-sm">Ingresar</button> </form>
-            <?php endif; ?>
-        </div>
 
-    </div>
+            <?php if (isset($_SESSION['usuario'])): ?>
+
+                <div class="d-flex align-items-center">
+
+                    <?php if ($_SESSION['usuario']['rol'] === 'Administrador'): ?>
+
+                        <span class="me-3 fw-bold">
+                Usuario ADMIN
+            </span>
+
+                    <?php else: ?>
+
+                        <span class="me-3 fw-bold">
+                <?php echo $_SESSION['usuario']['nombre']; ?>
+            </span>
+
+                    <?php endif; ?>
+
+                    <a href="resources/php/logout.php" class="btn btn-outline-danger btn-sm">
+                        Salir
+                    </a>
+
+                </div>
+
+            <?php else: ?>
+
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="d-flex align-items-center">
+
+                    <input type="text"
+                           name="username"
+                           class="form-control form-control-sm me-2"
+                           placeholder="Usuario"
+                           required>
+
+                    <input type="password"
+                           name="password"
+                           class="form-control form-control-sm me-2"
+                           placeholder="Password"
+                           required>
+
+                    <button type="submit" class="btn btn-primary btn-sm me-2">
+                        Ingresar
+                    </button>
+
+                    <a href="register.php" class="btn btn-success btn-sm">
+                        Registrarse
+                    </a>
+
+                </form>
+
+                <?php if($error != "") echo "<p style='color:red'>$error</p>"; ?>
+
+            <?php endif; ?>
+
+        </div>
 </header>
 
 <main class="container">
