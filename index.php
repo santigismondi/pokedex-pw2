@@ -4,7 +4,8 @@
     require __DIR__ . '/resources/php/header.php';
     require __DIR__ . '/resources/database/dbConection.php';
 
-    $busqueda = isset($_GET['busqueda']) ? mysqli_real_escape_string($conexion, $_GET['busqueda']) : '';
+/** @var TYPE_NAME $conexion */
+$busqueda = isset($_GET['busqueda']) ? mysqli_real_escape_string($conexion, $_GET['busqueda']) : '';
 
 
     // Armamos la consulta SQL base
@@ -42,7 +43,7 @@
                 <th>Tipo</th>
                 <th>Número</th>
                 <th>Nombre</th>
-                <?php if (isset($_SESSION['logueado']) && $_SESSION['logueado'] === true): ?>
+                <?php if (isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] === 'Administrador'): ?>
                     <th>Acciones</th>
                 <?php endif; ?>
             </tr>
@@ -67,7 +68,7 @@
                     echo "<td><a href='detalle.php?id=" . htmlspecialchars($fila['id']) . "'>" . htmlspecialchars($fila['nombre']) . "</a></td>";
 
                     // Si es administrador, mostramos los botones de acción
-                    if (isset($_SESSION['logueado']) && $_SESSION['logueado'] === true) {
+                    if (isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] === 'Administrador') {
                         echo "<td>";
                         echo "<a href='editar.php?id=" . htmlspecialchars($fila['id']) . "' class='btn btn-warning btn-sm me-1'>Modificación</a>";
                         echo "<a href='eliminar.php?id=" . htmlspecialchars($fila['id']) . "' class='btn btn-danger btn-sm'>Baja</a>";
@@ -87,7 +88,7 @@
     </div>
 </section>
 
-<?php if (isset($_SESSION['logueado']) && $_SESSION['logueado'] === true): ?>
+<?php if (isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] === 'Administrador'): ?>
     <div class="row">
         <div class="col">
             <a href="nuevo.php" class="btn btn-success w-100">Nuevo pokémon</a>
