@@ -94,7 +94,7 @@ $busqueda = isset($_GET['busqueda']) ? mysqli_real_escape_string($conexion, $_GE
 
 <?php if (isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] === 'Administrador'): ?>
     <div class="row">
-        <div class="col">
+        <div class="col pb-3">
             <a href="nuevo.php" class="btn btn-success w-100">Nuevo pokémon</a>
         </div>
     </div>
