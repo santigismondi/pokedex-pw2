@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container d-flex flex-wrap justify-content-between align-items-center">
 
         <div class="d-flex align-items-center">
-            <a href="../../index.php" class="d-flex align-items-center text-dark text-decoration-none">
+            <a href="index.php" class="d-flex align-items-center text-dark text-decoration-none">
                 <img src="resources/imagenes/logo.png" alt="Logo" width="40" height="40" class="me-2 border border-dark p-1">
                 <span class="fs-3 fw-bold font-monospace">Pokedex</span>
             </a>
